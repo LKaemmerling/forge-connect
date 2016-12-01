@@ -1,5 +1,4 @@
 <?php
-
 namespace LKDevelopment\ForgeConnect;
 
 use Mpociot\Blacksmith\Blacksmith;
@@ -9,13 +8,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ListServersCommand.
+ * Class ListServersCommand
+ * @package LKDevelopment\ForgeConnect
  */
 class ListServersCommand extends Command
 {
     use InteractsWithForgeConfiguration;
 
-
+    /**
+     *
+     */
     protected function configure()
     {
         $this->setName('servers:list')
@@ -28,9 +30,9 @@ class ListServersCommand extends Command
         $api = new Blacksmith($credentials['email'], $credentials['password']);
         $servers = $api->getActiveServers();
         $table = new Table($output);
-        $table->setHeaders(['Name', 'IP', 'Provider', 'Installed', 'Status']);
+        $table->setHeaders(['Name', 'IP', 'Provider','Installed','Status']);
         foreach ($servers as $server) {
-            $table->addRow([$server->name, $server->ip_address, $server->provider, $server->is_ready, $server->displayable_provision]);
+            $table->addRow([$server->name,$server->ip_address,$server->provider,$server->is_ready,$server->displayable_provision]);
         }
         $table->render();
     }
