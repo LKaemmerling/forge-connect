@@ -1,5 +1,4 @@
 <?php
-
 namespace LKDevelopment\ForgeConnect;
 
 use Mpociot\Blacksmith\Blacksmith;
@@ -10,13 +9,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
- * Class ConnectToServerCommand.
+ * Class ConnectToServerCommand
+ * @package LKDevelopment\ForgeConnect
  */
 class ConnectToServerCommand extends Command
 {
     use InteractsWithForgeConfiguration;
 
-
+    /**
+     *
+     */
     protected function configure()
     {
         $this->setName('servers:connect')
@@ -32,17 +34,17 @@ class ConnectToServerCommand extends Command
         $servers = $api->getActiveServers();
         foreach ($servers as $server) {
             if ($server->name == $input->getArgument('name')) {
-                $process = new Process('open ssh://forge@'.$server->ip_address);
+                $process = new Process('open ssh://forge@' . $server->ip_address);
                 $process->run();
                 if ($process->getExitCodeText() == Process::$exitCodes[0]) {
                     $output->writeln('<info>Starting Connection in new Window.</info>');
                 } else {
                     $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
                 }
-
                 return true;
             }
         }
         $output->writeln('<error>Can not find any Server with this name</error>');
     }
 }
+
