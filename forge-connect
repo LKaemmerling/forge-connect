@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+if (file_exists(__DIR__.'/vendor/autoload.php')) {
+    require __DIR__.'/vendor/autoload.php';
+} else {
+    require __DIR__.'/../../autoload.php';
+}
+$app = new Symfony\Component\Console\Application(
+    'Forge Connection', '1.0.0'
+);
+$app->add(new LKDevelopment\ForgeConnect\RegisterCommand());
+$app->add(new LKDevelopment\ForgeConnect\ListServersCommand());
+$app->add(new LKDevelopment\ForgeConnect\ConnectToServerCommand());
+$app->run();

@@ -1,0 +1,23 @@
+{
+    "name": "lkdev/forge-connect",
+    "require": {
+        "mpociot/blacksmith": "^0.3.1",
+        "symfony/console": "~2.7|~3.0",
+        "symfony/process": "~2.7|~3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lukas Kämmerling",
+            "email": "kontakt@lukas-kaemmerling.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "LKDevelopment\\ForgeConnect\\": "src/"
+        }
+    },
+    "bin": [
+        "forge-connect"
+    ]
+}
