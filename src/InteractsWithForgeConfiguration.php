@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: lukaskammerling
  * Date: 01.12.16
- * Time: 22:39
+ * Time: 22:39.
  */
-
 namespace LKDevelopment\ForgeConnect;
-
 
 trait InteractsWithForgeConfiguration
 {
@@ -19,9 +17,10 @@ trait InteractsWithForgeConfiguration
      */
     protected function readCredentials()
     {
-        if (!$this->configExists()) {
-            throw new \Exception("Forge Connect configuration file not found. Please register a Credentials.");
+        if (! $this->configExists()) {
+            throw new \Exception('Forge Connect configuration file not found. Please register a Credentials.');
         }
+
         return json_decode(base64_decode(
             file_get_contents($this->configPath())), true
         );
@@ -37,8 +36,8 @@ trait InteractsWithForgeConfiguration
     {
         file_put_contents($this->configPath(), base64_encode(json_encode([
                 'email' => $email,
-                'password' => $password
-            ], JSON_PRETTY_PRINT)) . PHP_EOL);
+                'password' => $password,
+            ], JSON_PRETTY_PRINT)).PHP_EOL);
     }
 
     /**
@@ -51,7 +50,6 @@ trait InteractsWithForgeConfiguration
         return file_exists($this->configPath());
     }
 
-
     /**
      * Get the Spark configuration file path.
      *
@@ -59,7 +57,7 @@ trait InteractsWithForgeConfiguration
      */
     protected function configPath()
     {
-        return $this->homePath() . '/.forgeConnect/config.json';
+        return $this->homePath().'/.forgeConnect/config.json';
     }
 
     /**
@@ -70,10 +68,10 @@ trait InteractsWithForgeConfiguration
      */
     protected function homePath()
     {
-        if (!empty($_SERVER['HOME'])) {
+        if (! empty($_SERVER['HOME'])) {
             return $_SERVER['HOME'];
-        } elseif (!empty($_SERVER['HOMEDRIVE']) && !empty($_SERVER['HOMEPATH'])) {
-            return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'];
+        } elseif (! empty($_SERVER['HOMEDRIVE']) && ! empty($_SERVER['HOMEPATH'])) {
+            return $_SERVER['HOMEDRIVE'].$_SERVER['HOMEPATH'];
         } else {
             throw new \Exception('Cannot determine home directory.');
         }
