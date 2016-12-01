@@ -1,9 +1,6 @@
 # Forge Connect
-[![StyleCI](https://styleci.io/repos/74739793/shield?branch=master)](https://styleci.io/repos/74739793)
-[![Latest Stable Version](https://poser.pugx.org/lkdev/laravel-uptime-monitor-api/v/stable)](https://packagist.org/packages/lkdev/laravel-uptime-monitor-api)
-[![Total Downloads](https://poser.pugx.org/lkdev/laravel-uptime-monitor-api/downloads)](https://packagist.org/packages/lkdev/laravel-uptime-monitor-api)
-[![License](https://poser.pugx.org/lkdev/laravel-uptime-monitor-api/license)](https://packagist.org/packages/lkdev/laravel-uptime-monitor-api)
-
+[![StyleCI](https://styleci.io/repos/75338534/shield?branch=master)](https://styleci.io/repos/75338534)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/cd4cd41e-5fd9-4f89-9c4a-d330a658f75a/small.png)](https://insight.sensiolabs.com/projects/cd4cd41e-5fd9-4f89-9c4a-d330a658f75a)
 This is an CLI Tool to easily connect to your Servers from [Forge](https://forge.laravel.com). Actually it is Mac Only!
 ## Installation
 
