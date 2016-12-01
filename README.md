@@ -24,9 +24,6 @@ And if you want to connect per SSH to one of your servers:
 ```bash
 forge-connect connect [NameOfYourServerFromForge]
 ```
-## Documentation
-
-You can find the Documentation [here](http://lk-development.de/docs/laravel-uptime-monitor-api-v1/).
 
 ## Changelog
 
