@@ -35,7 +35,7 @@ class ConnectToServerCommand extends Command
         foreach ($servers as $server) {
             if ($server->name == $input->getArgument('name')) {
                 $process = new Process('open ssh://forge@' . $server->ip_address);
-                $op = $process->run();
+                $process->run();
                 if ($process->getExitCodeText() == Process::$exitCodes[0]) {
                     $output->writeln('<info>Starting Connection in new Window.</info>');
                 } else {
@@ -47,3 +47,4 @@ class ConnectToServerCommand extends Command
         $output->writeln('<error>Can not find any Server with this name</error>');
     }
 }
+
