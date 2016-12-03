@@ -3,8 +3,8 @@
 namespace LKDevelopment\ForgeConnect;
 
 use Mpociot\Blacksmith\Blacksmith;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -14,7 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ListServersCommand extends Command
 {
     use InteractsWithForgeAll;
-
 
     protected function configure()
     {
@@ -36,7 +35,7 @@ class ListServersCommand extends Command
             $servers = $rawServers->map(function ($s) {
                 return $s->toArray();
             });
-            $this->putForgeCach($servers->toArray(),3600, 'servers');
+            $this->putForgeCach($servers->toArray(), 3600, 'servers');
         }
         $table = new Table($output);
         $table->setHeaders(['Name', 'IP', 'Provider', 'Installed', 'Status']);
