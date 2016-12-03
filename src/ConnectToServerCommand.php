@@ -3,6 +3,7 @@
 namespace LKDevelopment\ForgeConnect;
 
 use Mpociot\Blacksmith\Blacksmith;
+use Mpociot\Blacksmith\Models\Server;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,7 +35,7 @@ class ConnectToServerCommand extends Command
             $credentials = $this->getCredentials();
             $api = new Blacksmith($credentials['email'], $credentials['password']);
             $rawServers = $api->getActiveServers();
-            $servers = $rawServers->map(function ($s) {
+            $servers = $rawServers->map(function (Server $s) {
                 return $s->toArray();
             });
             $this->putForgeCach($servers->toArray(),3600, 'servers');
@@ -48,7 +49,7 @@ class ConnectToServerCommand extends Command
                 } else {
                     $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
                 }
-                exit();
+                return true;
             }
         }
         $output->writeln('<error>Can not find any Server with this name</error>');

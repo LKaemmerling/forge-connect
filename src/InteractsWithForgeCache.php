@@ -38,7 +38,7 @@ trait InteractsWithForgeCache
     protected function hasForgeCache($sub = null)
     {
         $this->bootCache();
-        return $this->cache->contains('forge' . (($sub == null) ? '' : '.' . $sub));
+        return $this->cache->contains('forge' . (($sub === null) ? '' : '.' . $sub));
     }
 
     /**
@@ -48,7 +48,7 @@ trait InteractsWithForgeCache
     protected function getForgeCache($sub = null)
     {
         $this->bootCache();
-        return $this->cache->fetch('forge' . (($sub == null) ? '' : '.' . $sub));
+        return $this->cache->fetch('forge' . (($sub === null) ? '' : '.' . $sub));
     }
 
     /**
@@ -60,8 +60,6 @@ trait InteractsWithForgeCache
     protected function putForgeCach(array $data, $lifetime = 3600, $sub = null)
     {
         $this->bootCache();
-        //$this->cache->save('test',print_r($data,true));
-        //die();
-        return $this->cache->save('forge' . (($sub == null) ? '' : '.' . $sub), $data);
+        return $this->cache->save('forge' . (($sub === null) ? '' : '.' . $sub), $data,$lifetime);
     }
 }

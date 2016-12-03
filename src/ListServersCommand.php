@@ -3,6 +3,7 @@
 namespace LKDevelopment\ForgeConnect;
 
 use Mpociot\Blacksmith\Blacksmith;
+use Mpociot\Blacksmith\Models\Server;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,7 +26,7 @@ class ListServersCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->hasForgeCache('servers') && $input->getOption('recache') == false) {
+        if ($this->hasForgeCache('servers') && $input->getOption('recache') === false) {
             $servers = $this->getForgeCache('servers');
             $output->writeln('<info>Using Cache</info>');
         } else {
@@ -33,7 +34,7 @@ class ListServersCommand extends Command
             $credentials = $this->getCredentials();
             $api = new Blacksmith($credentials['email'], $credentials['password']);
             $rawServers = $api->getActiveServers();
-            $servers = $rawServers->map(function ($s) {
+            $servers = $rawServers->map(function (Server $s) {
                 return $s->toArray();
             });
             $this->putForgeCach($servers->toArray(),3600, 'servers');
