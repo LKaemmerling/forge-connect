@@ -4,11 +4,11 @@ namespace LKDevelopment\ForgeConnect;
 
 use Mpociot\Blacksmith\Blacksmith;
 use Mpociot\Blacksmith\Models\Server;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 /**
  * Class ConnectToServerCommand.
@@ -16,7 +16,6 @@ use Symfony\Component\Process\Process;
 class ConnectToServerCommand extends Command
 {
     use InteractsWithForgeAll;
-
 
     protected function configure()
     {
@@ -38,7 +37,7 @@ class ConnectToServerCommand extends Command
             $servers = $rawServers->map(function (Server $s) {
                 return $s->toArray();
             });
-            $this->putForgeCach($servers->toArray(),3600, 'servers');
+            $this->putForgeCach($servers->toArray(), 3600, 'servers');
         }
         foreach ($servers as $server) {
             if ($server['name'] == $input->getArgument('name')) {
@@ -49,6 +48,7 @@ class ConnectToServerCommand extends Command
                 } else {
                     $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
                 }
+
                 return true;
             }
         }
