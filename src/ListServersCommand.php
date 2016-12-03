@@ -13,24 +13,35 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListServersCommand extends Command
 {
-    use InteractsWithForgeConfiguration;
+    use InteractsWithForgeAll;
 
 
     protected function configure()
     {
         $this->setName('servers:list')
+            ->addOption('recache')
             ->setDescription('Returns the List of your Servers from Forge');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $credentials = $this->readCredentials();
-        $api = new Blacksmith($credentials['email'], $credentials['password']);
-        $servers = $api->getActiveServers();
+        if ($this->hasForgeCache('servers') && $input->getOption('recache') == false) {
+            $servers = $this->getForgeCache('servers');
+            $output->writeln('<info>Using Cache</info>');
+        } else {
+            $this->askForPassphrase($input, $output);
+            $credentials = $this->getCredentials();
+            $api = new Blacksmith($credentials['email'], $credentials['password']);
+            $rawServers = $api->getActiveServers();
+            $servers = $rawServers->map(function ($s) {
+                return $s->toArray();
+            });
+            $this->putForgeCach($servers->toArray(),3600, 'servers');
+        }
         $table = new Table($output);
         $table->setHeaders(['Name', 'IP', 'Provider', 'Installed', 'Status']);
         foreach ($servers as $server) {
-            $table->addRow([$server->name, $server->ip_address, $server->provider, $server->is_ready, $server->displayable_provision]);
+            $table->addRow([$server['name'], $server['ip_address'], $server['provider'], $server['is_ready'], $server['displayable_provision']]);
         }
         $table->render();
     }

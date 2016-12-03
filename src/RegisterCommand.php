@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RegisterCommand extends Command
 {
-    use InteractsWithForgeConfiguration;
+    use InteractsWithForgeConnectDir, InteractsWithForgeConfiguration;
 
 
     public function configure()
@@ -29,9 +29,10 @@ class RegisterCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (! $this->configExists()) {
-            mkdir($this->homePath().'/.forgeConnect');
+        if (!$this->configExists() && file_exists($this->homePath() . '/.forgeConnect')) {
+            mkdir($this->homePath() . '/.forgeConnect');
         }
+        $this->askForPassphrase($input, $output);
         $this->storeCredentials($input->getArgument('email'), $input->getArgument('password'));
         $output->writeln('<info>Saved!</info>');
     }

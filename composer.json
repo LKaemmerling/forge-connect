@@ -4,7 +4,9 @@
     "require": {
         "mpociot/blacksmith": "^0.3.1",
         "symfony/console": "~2.7|~3.0",
-        "symfony/process": "~2.7|~3.0"
+        "symfony/process": "~2.7|~3.0",
+        "illuminate/encryption": "^5.3",
+        "doctrine/cache": "^1.6"
     },
     "license": "MIT",
     "authors": [

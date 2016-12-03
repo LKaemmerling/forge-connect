@@ -14,7 +14,7 @@ use Symfony\Component\Process\Process;
  */
 class ConnectToServerCommand extends Command
 {
-    use InteractsWithForgeConfiguration;
+    use InteractsWithForgeAll;
 
 
     protected function configure()
@@ -27,20 +27,28 @@ class ConnectToServerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $credentials = $this->readCredentials();
-        $api = new Blacksmith($credentials['email'], $credentials['password']);
-        $servers = $api->getActiveServers();
+        if ($this->hasForgeCache('servers')) {
+            $servers = $this->getForgeCache('servers');
+        } else {
+            $this->askForPassphrase($input, $output);
+            $credentials = $this->getCredentials();
+            $api = new Blacksmith($credentials['email'], $credentials['password']);
+            $rawServers = $api->getActiveServers();
+            $servers = $rawServers->map(function ($s) {
+                return $s->toArray();
+            });
+            $this->putForgeCach($servers->toArray(),3600, 'servers');
+        }
         foreach ($servers as $server) {
-            if ($server->name == $input->getArgument('name')) {
-                $process = new Process('open ssh://forge@'.$server->ip_address);
+            if ($server['name'] == $input->getArgument('name')) {
+                $process = new Process('open ssh://forge@'.$server['ip_address']);
                 $process->run();
                 if ($process->getExitCodeText() == Process::$exitCodes[0]) {
                     $output->writeln('<info>Starting Connection in new Window.</info>');
                 } else {
                     $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
                 }
-
-                return true;
+                exit();
             }
         }
         $output->writeln('<error>Can not find any Server with this name</error>');

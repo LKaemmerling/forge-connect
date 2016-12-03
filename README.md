@@ -8,7 +8,7 @@ This is an CLI Tool to easily connect to your Servers from [Forge](https://forge
 composer global require lkdev/forge-connect
 ```
 
-Than simply run:
+Than simply run to register your Forge Credentials. There will be encrypted and saved. You must define your own Passphrase
 ```bash
 forge-connect register [YourForgeEMail] [YourForgePassword]
 ```

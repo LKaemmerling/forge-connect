@@ -7,23 +7,64 @@
  */
 namespace LKDevelopment\ForgeConnect;
 
+use Illuminate\Encryption\Encrypter;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
+
+/**
+ * Class InteractsWithForgeConfiguration
+ * @package LKDevelopment\ForgeConnect
+ */
 trait InteractsWithForgeConfiguration
 {
+    /**
+     * @var
+     */
+    protected $passphrase;
+
     /**
      * Get the Forge Credentials from the configuration file.
      *
      * @return string
      * @throws \Exception
      */
-    protected function readCredentials()
+    protected function readConfig()
     {
-        if (! $this->configExists()) {
+        if (!$this->configExists()) {
             throw new \Exception('Forge Connect configuration file not found. Please register a Credentials.');
         }
 
-        return json_decode(base64_decode(
-            file_get_contents($this->configPath())), true
+        return json_decode(
+            file_get_contents($this->configPath()), true
         );
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function askForPassphrase(InputInterface $input, OutputInterface $output)
+    {
+        $helper = $this->getHelper('question');
+
+        $question = new Question('Please enter your passphrase:');
+        $question->setHidden(true);
+        $this->passphrase = hash('md5', $helper->ask($input, $output, $question));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCredentials()
+    {
+        $encryption = new Encrypter($this->passphrase, 'AES-256-CBC');
+        $pass = $encryption->decrypt($this->readConfig()['credentials']['password']);
+
+        return [
+            'email' => $this->readConfig()['credentials']['email'],
+            'password' => $pass
+        ];
     }
 
     /**
@@ -34,14 +75,36 @@ trait InteractsWithForgeConfiguration
      */
     protected function storeCredentials($email, $password)
     {
-        file_put_contents($this->configPath(), base64_encode(json_encode([
-                'email' => $email,
-                'password' => $password,
-            ], JSON_PRETTY_PRINT)).PHP_EOL);
+        $encryption = new Encrypter($this->passphrase, 'AES-256-CBC');
+        $config = ($this->configExists()) ? $this->readConfig() : [];
+        $config['credentials'] = [
+            'email' => $email,
+            'password' => $encryption->encrypt($password),
+        ];
+        $this->storeConfig($config);
     }
 
     /**
-     * Determine if the Spark configuration file exists.
+     * @param $config
+     */
+    protected function storeConfig($config)
+    {
+
+        file_put_contents($this->configPath(), json_encode($config, JSON_PRETTY_PRINT) . PHP_EOL);
+    }
+
+    /**
+     * Get the Forge Connect configuration file path.
+     *
+     * @return string
+     */
+    protected function configPath()
+    {
+        return $this->getPath() . '/config.json';
+    }
+
+    /**
+     * Determine if the Forge Connect configuration file exists.
      *
      * @return bool
      */
@@ -50,30 +113,16 @@ trait InteractsWithForgeConfiguration
         return file_exists($this->configPath());
     }
 
-    /**
-     * Get the Spark configuration file path.
-     *
-     * @return string
-     */
-    protected function configPath()
-    {
-        return $this->homePath().'/.forgeConnect/config.json';
-    }
 
     /**
-     * Get the User's home path.
      *
-     * @return string
-     * @throws \Exception
      */
-    protected function homePath()
+    protected function getConsoleTool()
     {
-        if (! empty($_SERVER['HOME'])) {
-            return $_SERVER['HOME'];
-        } elseif (! empty($_SERVER['HOMEDRIVE']) && ! empty($_SERVER['HOMEPATH'])) {
-            return $_SERVER['HOMEDRIVE'].$_SERVER['HOMEPATH'];
+        if (!isset($this->readConfig()['console'])) {
+            return null;
         } else {
-            throw new \Exception('Cannot determine home directory.');
+            return $this->readConfig()['console'];
         }
     }
 }
