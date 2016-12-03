@@ -1,4 +1,5 @@
 <?php
+
 namespace LKDevelopment\ForgeConnect;
 
 trait InteractsWithForgeAll

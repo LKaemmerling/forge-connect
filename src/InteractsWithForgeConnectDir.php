@@ -3,15 +3,13 @@
  * Created by PhpStorm.
  * User: lukaskammerling
  * Date: 03.12.16
- * Time: 16:48
+ * Time: 16:48.
  */
 
 namespace LKDevelopment\ForgeConnect;
 
-
 /**
- * Class InteractsWithForgeConnectDir
- * @package LKDevelopment\ForgeConnect
+ * Class InteractsWithForgeConnectDir.
  */
 trait InteractsWithForgeConnectDir
 {
@@ -25,10 +23,11 @@ trait InteractsWithForgeConnectDir
      */
     protected function getPath()
     {
-        if (!file_exists($this->homePath() . '/' . self::$FOLDER_NAME . '/')) {
-            mkdir($this->homePath() . '/' . self::$FOLDER_NAME . '/');
+        if (! file_exists($this->homePath().'/'.self::$FOLDER_NAME.'/')) {
+            mkdir($this->homePath().'/'.self::$FOLDER_NAME.'/');
         }
-        return $this->homePath() . '/' . self::$FOLDER_NAME . '/';
+
+        return $this->homePath().'/'.self::$FOLDER_NAME.'/';
     }
 
     /**
@@ -39,10 +38,10 @@ trait InteractsWithForgeConnectDir
      */
     protected function homePath()
     {
-        if (!empty($_SERVER['HOME'])) {
+        if (! empty($_SERVER['HOME'])) {
             return $_SERVER['HOME'];
-        } elseif (!empty($_SERVER['HOMEDRIVE']) && !empty($_SERVER['HOMEPATH'])) {
-            return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'];
+        } elseif (! empty($_SERVER['HOMEDRIVE']) && ! empty($_SERVER['HOMEPATH'])) {
+            return $_SERVER['HOMEDRIVE'].$_SERVER['HOMEPATH'];
         } else {
             throw new \Exception('Cannot determine home directory.');
         }
