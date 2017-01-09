@@ -31,8 +31,8 @@ class ForgeConnect extends Application
     public function __construct()
     {
         parent::__construct('forge-connect', self::VERSION);
-        $this->add(RegisterCommand::class);
-        $this->add(ListServersCommand::class);
-        $this->add(ConnectToServerCommand::class);
+        $this->add(new RegisterCommand());
+        $this->add(new ListServersCommand());
+        $this->add(new ConnectToServerCommand());
     }
 }
