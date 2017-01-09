@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use LKDevelopment\ForgeConnect\Traits\InteractsWithForgeConnectDir;
 use LKDevelopment\ForgeConnect\Traits\InteractsWithForgeConfiguration;
+
 /**
  * Class RegisterCommand.
  */
@@ -29,8 +30,8 @@ class RegisterCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->configExists() && file_exists($this->homePath() . '/.forgeConnect')) {
-            mkdir($this->homePath() . '/.forgeConnect');
+        if (! $this->configExists() && file_exists($this->homePath().'/.forgeConnect')) {
+            mkdir($this->homePath().'/.forgeConnect');
         }
         $this->askForPassphrase($input, $output);
         $this->storeCredentials($input->getArgument('email'), $input->getArgument('password'));

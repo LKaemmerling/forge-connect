@@ -2,14 +2,14 @@
 
 namespace LKDevelopment\ForgeConnect\Commands;
 
-use LKDevelopment\ForgeConnect\Traits\InteractsWithForgeAll;
 use Mpociot\Blacksmith\Blacksmith;
 use Mpociot\Blacksmith\Models\Server;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
+use LKDevelopment\ForgeConnect\Traits\InteractsWithForgeAll;
 
 /**
  * Class ConnectToServerCommand.
@@ -49,7 +49,7 @@ class ConnectToServerCommand extends Command
                 if ($process->getExitCodeText() == Process::$exitCodes[0]) {
                     $output->writeln('<info>Starting Connection in new Window.</info>');
                 } else {
-                    $output->writeln('<error>Error on Startup:' . $process->getErrorOutput() . '.</error>');
+                    $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
                 }
 
                 return true;
