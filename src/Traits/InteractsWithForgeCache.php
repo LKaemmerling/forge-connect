@@ -6,7 +6,7 @@
  * Time: 16:48.
  */
 
-namespace LKDevelopment\ForgeConnect;
+namespace LKDevelopment\ForgeConnect\Traits;
 
 use Doctrine\Common\Cache\FilesystemCache;
 
@@ -51,7 +51,7 @@ trait InteractsWithForgeCache
      * @param null $sub
      * @return bool
      */
-    protected function putForgeCach(array $data, $lifetime = 3600, $sub = null)
+    protected function putForgeCache(array $data, $lifetime = 3600, $sub = null)
     {
         $this->bootCache();
 

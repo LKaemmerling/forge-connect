@@ -6,7 +6,7 @@
  * Time: 16:48.
  */
 
-namespace LKDevelopment\ForgeConnect;
+namespace LKDevelopment\ForgeConnect\Traits;
 
 /**
  * Class InteractsWithForgeConnectDir.

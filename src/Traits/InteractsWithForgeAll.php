@@ -1,6 +1,6 @@
 <?php
 
-namespace LKDevelopment\ForgeConnect;
+namespace LKDevelopment\ForgeConnect\Traits;
 
 trait InteractsWithForgeAll
 {

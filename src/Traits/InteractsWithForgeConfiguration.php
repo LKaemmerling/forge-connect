@@ -6,7 +6,7 @@
  * Time: 22:39.
  */
 
-namespace LKDevelopment\ForgeConnect;
+namespace LKDevelopment\ForgeConnect\Traits;
 
 use Illuminate\Encryption\Encrypter;
 use Symfony\Component\Console\Question\Question;
@@ -115,7 +115,7 @@ trait InteractsWithForgeConfiguration
     protected function getConsoleTool()
     {
         if (! isset($this->readConfig()['console'])) {
-            return;
+            return 'open ssh://{user}@{ip_address}';
         } else {
             return $this->readConfig()['console'];
         }
