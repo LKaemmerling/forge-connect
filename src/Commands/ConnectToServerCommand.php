@@ -45,6 +45,7 @@ class ConnectToServerCommand extends Command
                 $command_with_placeholder = $this->getConsoleTool();
                 $command_without_placeholder = str_replace(['{user}', '{ip_address}'], ['forge', $server['ip_address']], $command_with_placeholder);
                 $process = new Process($command_without_placeholder);
+                $process->setTty(true);
                 $process->run();
                 if ($process->getExitCodeText() == Process::$exitCodes[0]) {
                     $output->writeln('<info>Starting Connection in new Window.</info>');
