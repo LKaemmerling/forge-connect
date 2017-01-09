@@ -51,7 +51,6 @@ class ConnectToServerCommand extends Command
                 } else {
                     $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
                 }
-
                 return true;
             }
         }
