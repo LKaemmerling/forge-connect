@@ -50,7 +50,7 @@ class ConnectToServerCommand extends Command
                     $output->writeln('<info>Starting Connection in new Window.</info>');
                 } else {
                     $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
-                    $output->writeln('<info>Please try it manually:'.$command_without_placeholder.'.</info>');
+                    $output->writeln('<info>Please try it manually:'.$command_without_placeholder.'</info>');
                 }
                 return true;
             }
