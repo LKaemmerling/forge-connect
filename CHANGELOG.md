@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0 - 2017-01-xx
+## 1.2.0 - 2017-01-10
 - Code Refactoring and Improvements
 - Improvements for other OS than MacOS
 - Configurable SSH Command
