@@ -53,6 +53,7 @@ class ConnectToServerCommand extends Command
                     $output->writeln('<error>Error on Startup:'.$process->getErrorOutput().'.</error>');
                     $output->writeln('<info>Please try it manually:'.$command_without_placeholder.'</info>');
                 }
+
                 return true;
             }
         }
