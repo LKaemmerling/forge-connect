@@ -9,9 +9,9 @@
 namespace LKDevelopment\ForgeConnect\Traits;
 
 use Illuminate\Encryption\Encrypter;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Class InteractsWithForgeConfiguration.
@@ -31,7 +31,7 @@ trait InteractsWithForgeConfiguration
      */
     protected function readConfig()
     {
-        if (! $this->configExists()) {
+        if (!$this->configExists()) {
             throw new \Exception('Forge Connect configuration file not found. Please register a Credentials.');
         }
 
@@ -89,7 +89,7 @@ trait InteractsWithForgeConfiguration
      */
     protected function storeConfig($config)
     {
-        file_put_contents($this->configPath(), json_encode($config, JSON_PRETTY_PRINT).PHP_EOL);
+        file_put_contents($this->configPath(), json_encode($config, JSON_PRETTY_PRINT) . PHP_EOL);
     }
 
     /**
@@ -99,7 +99,7 @@ trait InteractsWithForgeConfiguration
      */
     protected function configPath()
     {
-        return $this->getPath().'/config.json';
+        return $this->getPath() . '/config.json';
     }
 
     /**
@@ -112,12 +112,31 @@ trait InteractsWithForgeConfiguration
         return file_exists($this->configPath());
     }
 
+    /**
+     * Get the CMD line
+     *
+     * @return string
+     */
     protected function getConsoleTool()
     {
-        if (! isset($this->readConfig()['console'])) {
-            return 'open ssh://{user}@{ip_address}';
+        if (!isset($this->readConfig()['console'])) {
+            return $this->getOSSpecificDefaultCommand();
         } else {
             return $this->readConfig()['console'];
+        }
+    }
+
+    /**
+     * Return the Default CMD Line for the specific OS
+     *
+     * @return string
+     */
+    protected function getOSSpecificDefaultCommand()
+    {
+        if (stristr(PHP_OS, 'LINUX')) {
+            return 'ssh {ip_address} -l {user}';
+        } else {
+            return 'open ssh://{user}@{ip_address}';
         }
     }
 }
