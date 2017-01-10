@@ -1,4 +1,4 @@
-# Forge Connect Test
+# Forge Connect
 [![StyleCI](https://styleci.io/repos/75338534/shield?branch=master)](https://styleci.io/repos/75338534)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/cd4cd41e-5fd9-4f89-9c4a-d330a658f75a/small.png)](https://insight.sensiolabs.com/projects/cd4cd41e-5fd9-4f89-9c4a-d330a658f75a)
 This is an CLI Tool to easily connect to your Servers from [Forge](https://forge.laravel.com). Actually it is Mac Only!
